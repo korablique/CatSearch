@@ -1,10 +1,14 @@
 package com.example.korablique.catsearch;
 
 
-import com.example.korablique.catsearch.imagesearch.JSONResponse;
+import com.example.korablique.catsearch.imagesearch.ImageInfo;
 
-import retrofit2.Callback;
+import java.util.List;
 
 public interface MainActivityModel {
-    void requestImages(Callback<JSONResponse> callback);
+    interface ImagesCallback {
+        void onResponse(List<ImageInfo> imageInfoList);
+        void onFailure(Throwable t);
+    }
+    void requestImages(ImagesCallback callback);
 }

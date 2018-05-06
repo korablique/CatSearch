@@ -11,18 +11,17 @@ public class ImageInfo implements Parcelable {
     @Expose
     private String contentUrl;
 
-    @SerializedName("encodingFormat")
-    @Expose
-    private String encodingFormat;
-
     @SerializedName("thumbnailUrl")
     @Expose
     private String thumbnailUrl;
 
+    public ImageInfo(String contentUrl, String thumbnailUrl) {
+        this.contentUrl = contentUrl;
+        this.thumbnailUrl = thumbnailUrl;
+    }
 
     protected ImageInfo(Parcel in) {
         contentUrl = in.readString();
-        encodingFormat = in.readString();
         thumbnailUrl = in.readString();
     }
 
@@ -46,14 +45,6 @@ public class ImageInfo implements Parcelable {
         this.contentUrl = contentUrl;
     }
 
-    public String getEncodingFormat() {
-        return encodingFormat;
-    }
-
-    public void setEncodingFormat(String encodingFormat) {
-        this.encodingFormat = encodingFormat;
-    }
-
     public String getThumbnailUrl() {
         return thumbnailUrl;
     }
@@ -70,7 +61,6 @@ public class ImageInfo implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(contentUrl);
-        dest.writeString(encodingFormat);
         dest.writeString(thumbnailUrl);
     }
 }

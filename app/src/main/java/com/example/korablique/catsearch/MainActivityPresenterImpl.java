@@ -8,16 +8,10 @@ import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 
 import com.example.korablique.catsearch.imagesearch.ImageInfo;
-import com.example.korablique.catsearch.imagesearch.JSONResponse;
 
 import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 import static android.net.ConnectivityManager.CONNECTIVITY_ACTION;
 
@@ -79,19 +73,17 @@ public class MainActivityPresenterImpl implements MainActivityPresenter {
         waitingResponse = true;
         view.showProgressBar();
         view.hideConnectivityError();
-        model.requestImages(new Callback<JSONResponse>() {
+        model.requestImages(new MainActivityModel.ImagesCallback() {
             @Override
-            public void onResponse(@NonNull Call<JSONResponse> call, @NonNull Response<JSONResponse> response) {
-                if (response.body() != null) {
-                    List<ImageInfo> imageInfoList = response.body().getImageInfoList();
-                    view.showImages(imageInfoList);
-                    view.hideProgressBar();
-                }
+            public void onResponse(List<ImageInfo> imageInfoList) {
+                view.showImages(imageInfoList);
+                view.hideProgressBar();
+
                 waitingResponse = false;
             }
 
             @Override
-            public void onFailure(@NonNull Call<JSONResponse> call, @NonNull Throwable t) {
+            public void onFailure(Throwable t) {
                 view.hideProgressBar();
                 view.displayConnectivityError();
                 waitingResponse = false;
